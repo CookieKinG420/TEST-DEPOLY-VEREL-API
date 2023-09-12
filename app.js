@@ -4,19 +4,20 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
-const products = require('./routes/Product.js');
 require('dotenv').config()
+const products = require('./routes/Product');
 const uri = process.env.MONGODB_CONNECT_URI
 
 mongoose.Promise = global.Promise;
-mongoose.connect(uri)
-          .then(() => console.log('connect successfuly'))
-          .catch((err) => console.error(err))
+mongoose.connect(uri).then(() => console.log('connect successfuly')).catch((err) => console.error(err))
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,7 +33,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.use('/products', products);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
