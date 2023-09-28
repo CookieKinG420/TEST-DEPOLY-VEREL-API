@@ -24,7 +24,7 @@ router.delete('/:id', async(req,res,next) =>{
     }
 })
 
-router.put('edit/:id', async(req, res, next)=> {
+router.put('/edit/:id', async(req, res, next)=> {
     try{
         const update = await adBox.findByIdAndUpdate(req.params.id,req.body, {new: true});
         if(!update){
