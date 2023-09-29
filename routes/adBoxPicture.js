@@ -12,7 +12,7 @@ router.get('/', async (req,res,next)=>{
     }
 })
 
-router.delete('/:id', async(req,res,next) =>{
+router.delete('/delete/:id', async(req,res,next) =>{
     try{
         const deleteadBoxPic = await adBox.findByIdAndDelete(req.params.id);
         if(!deleteadBoxPic){
