@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 const products = require('./routes/Product');
 const adBox = require('./routes/adBoxPicture');
+const user = require('./routes/userRoutes');
+
 const uri = process.env.MONGODB_CONNECT_URI
 
 mongoose.Promise = global.Promise;
@@ -35,7 +37,7 @@ app.use('/users', usersRouter);
 
 app.use('/products', products);
 app.use('/adBox', adBox);
-
+app.use('/user', user)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
