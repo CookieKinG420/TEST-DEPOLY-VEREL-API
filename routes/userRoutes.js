@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
   
       // Generate a token for the user
       const token = generateToken(user);
-      return res.json({ token, role: user.role });
+      return res.json({ token, role: user.role , _id: user._id});
     } catch (err) {
       console.error(err);
       return res.status(500).json({ error: 'Server error' });
@@ -60,5 +60,45 @@ router.post('/register', async (req, res) => {
         return res.status(500).json({ error: 'Server error' });
         }
 });  
+//get all user
+router.get('/users', async (req, res) => {
+  try {
+    const { role } = req.query;
+    const filter = role ? { role } : {};
+    const users = await User.find(filter, { password: 0 }); // Exclude the password field
+    return res.json(users);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+// Route to get user information
+router.get('/me', async (req, res) => {
+  const { _id } = req.body;
+  try {
+    if (!_id) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    const user = await User.findById(_id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json({
+      _id: user._id,
+      username: user.username,
+      role: user.role,
+      // Add any other user information you want to return
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
 
 module.exports = router;
