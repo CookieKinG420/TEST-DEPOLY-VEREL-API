@@ -75,8 +75,8 @@ router.get('/users', async (req, res) => {
 
 
 // Route to get user information
-router.get('/me', async (req, res) => {
-  const { _id } = req.body;
+router.get('/me/:_id', async (req, res) => {
+  const { _id } = req.params;
   try {
     if (!_id) {
       return res.status(400).json({ error: 'User ID is required' });
@@ -98,6 +98,7 @@ router.get('/me', async (req, res) => {
     return res.status(500).json({ error: 'Server error' });
   }
 });
+
 
 
 
